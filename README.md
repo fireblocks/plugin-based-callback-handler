@@ -93,6 +93,11 @@ class MyExamplePlugin(PluginInterface)
    - For example: `PLUGINS=plugin_one,plugin_two,my_example_plugin:/path/to/plugin`
 </br>
 
+#### Adding Validations:
+
+- To implement validations that execute during server startup, please add them as functions in the `src/validations.py` file and ensure they are incorporated in the `run_validations()` function.
+---
+
 ### Setting a new DB connection:
 1. By default, MongoDB and Postgres are supported. If one of these works for you, update the required environment variables in .env file.
 2. If a new type of DB connection is required, please follow the steps below:
