@@ -8,16 +8,16 @@
 </div>
 
 # Fireblocks Plugin Based Callback Handler
-❗⚠️  `This is a WIP Alpha project. Please do not use it in your production environment` ⚠️❗
+⚠️  `Please be aware that this package serves as an example to demonstrate the usage of the Fireblocks API Co-Signer callback handler. It is not intended for use in production environments.` ⚠️
 
 ## Table Of Contents 📖
 
 - [Introduction](#introduction)
 - [Architecture](#architecture)
-- [Basic Plugins](https://github.com/fireblocks/developers-hub/blob/main/plugin_based_callback/src/plugins/README.md#basic-plugins-)
-  - [Transaction Validation](https://github.com/fireblocks/developers-hub/blob/main/plugin_based_callback/src/plugins/README.md#transaction-validation-plugin-txid_validationpytxidvalidation-class)
-  - [Extra Signature Validation](https://github.com/fireblocks/developers-hub/blob/main/plugin_based_callback/src/plugins/README.md#extra-signature-validation-extra_signaturepyextrasignature-class)
-  - [Transaction Policy Validation]("")
+- [Basic Plugins](https://github.com/fireblocks/plugin-based-callback-handler/blob/main/src/plugins/README.md#basic-plugins-)
+  - [Transaction Validation](https://github.com/fireblocks/plugin-based-callback-handler/blob/main/src/plugins/README.md#transaction-validation-plugin-txid_validationpytxidvalidation-class)
+  - [Extra Signature Validation](https://github.com/fireblocks/plugin-based-callback-handler/blob/main/src/plugins/README.md#extra-signature-validation-extra_signaturepyextrasignature-class)
+  - [Transaction Policy Validation](https://github.com/fireblocks/plugin-based-callback-handler/blob/main/src/plugins/README.md#transaction-policy-validation-plugin-tx_policy_validationpytxpolicyvalidation-class)
 - [Contribution](#contribution)
   - [Adding New Plugins](#new-plugins)
   - [New DB Connections](#setting-a-new-db-connection)

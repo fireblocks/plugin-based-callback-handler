@@ -15,8 +15,9 @@ Purpose - validate that the arrived transaction was not initiated by some extern
 8. If true -> returns `APPROVE` else returns `REJECT`
 
 #### Requirements:
-1. Supported DB connection (`DB_TYPE` in .env file)
-2. DB access credentials:
+1. Plugin setup name in `.env` - `txid_validation`
+2. Supported DB connection (`DB_TYPE` in .env file)
+3. DB access credentials:
    - Username (`DB_USER` in .env file)
    - Password (`DB_PASSWORD` in .env file)
    - Host (`DB_HOST` in .env file)
@@ -55,8 +56,9 @@ Purpose - validate that the arrived transaction was initiated only by a pre-defi
 8. If true -> returns `APPROVE` else returns `REJECT`
 
 #### Requirements:
-1. Public key file path for extra signature verification (`EXTRA_SIGNATURE_PUBLIC_KEY_PATH` var in .env file) 
-2. Currently the supported signature algorithm is - `RSA-SHA256`
+1. Plugin setup name in `.env` - `extra_signature`
+2. Public key file path for extra signature verification (`EXTRA_SIGNATURE_PUBLIC_KEY_PATH` var in .env file) 
+3. Currently the supported signature algorithm is - `RSA-SHA256`
 
 --- 
 
@@ -74,7 +76,8 @@ Purpose - Customize policy programmatically, supporting your specific use case.
 6. If true -> returns `APPROVE` else returns `REJECT`
 
 #### Requirements:
-Fireblocks API Credentials
+1. Plugin setup name in `.env` - `tx_policy_validation`
+2. Fireblocks API Credentials
    - API Key (`FIREBLOCKS_API_KEY` in .env file)
    - API Private Key Path (`FIREBLOCKS_API_PRIVATE_KEY_PATH=` in .env file)
 
