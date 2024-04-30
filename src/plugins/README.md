@@ -1,4 +1,4 @@
-## Basic Plugins ⚾
+## Built-in Plugins 🗂️
 ### Transaction Validation Plugin (`txid_validation.py/TxidValidation` class)
 Being executed on `POST /v2/tx_sign_request`.
 The plugin gets the transaction ID (txId) from the payload sent from the Co-Signer and check against a given DB if the same transaction ID exists. \

@@ -14,7 +14,7 @@
 
 - [Introduction](#introduction)
 - [Architecture](#architecture)
-- [Basic Plugins](https://github.com/fireblocks/plugin-based-callback-handler/blob/main/src/plugins/README.md#basic-plugins-)
+- Built-in plugins:
   - [Transaction Validation](https://github.com/fireblocks/plugin-based-callback-handler/blob/main/src/plugins/README.md#transaction-validation-plugin-txid_validationpytxidvalidation-class)
   - [Extra Signature Validation](https://github.com/fireblocks/plugin-based-callback-handler/blob/main/src/plugins/README.md#extra-signature-validation-extra_signaturepyextrasignature-class)
   - [Transaction Policy Validation](https://github.com/fireblocks/plugin-based-callback-handler/blob/main/src/plugins/README.md#transaction-policy-validation-plugin-tx_policy_validationpytxpolicyvalidation-class)
