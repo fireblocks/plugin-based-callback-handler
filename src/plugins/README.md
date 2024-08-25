@@ -86,3 +86,36 @@ Purpose - Customize policy programmatically, supporting your specific use case.
 2. Approvers are not validated
 
 ---
+
+### PSBT Validation Plugin (`psbt_validation.py/PSBTValidation` class)
+Being executed on `POST /v2/tx_sign_request`.
+
+The plugin gets the PSBT from the payload sent from the Co-Signer and checks against a given DB if the same PSBT exists. 
+
+Additionally, the plugin validates that all the hashes in the raw signing requests are derived from the PSBT.
+
+Purpose - validate that the arrived transaction was not initiated by some external actor and is known to the operator. 
+
+#### Flow:
+1. API client initiates transaction via [Fireblocks PSBT SDK](https://github.com/fireblocks/psbt-sdk)
+2. The PSBT is saved in the user's DB
+3. The transaction hits the Co-Signer machine that forwards the request to the configured callback handler
+4. The callback handler runs the PSBT Validation Plugin 
+5. The plugin extracts the PSBT from the received data
+6. The plugin accesses the provided DB instance and checks if the same PSBT exists
+7. The plugin validates that all the hashes in the raw signing requests are derived from the PSBT
+8. If true -> returns `APPROVE` else returns `REJECT`
+
+#### Requirements:
+1. Plugin setup name in `.env` - `psbt_validation`
+2. Supported DB connection (`DB_TYPE` in .env file)
+3. DB access credentials:
+   - Username (`DB_USER` in .env file)
+   - Password (`DB_PASSWORD` in .env file)
+   - Host (`DB_HOST` in .env file)
+   - Port (`DB_PORT` in .env file if applicable)
+   - DB Name (`DB_NAME` in .env file)
+   - DB Table/Collection name (`DB_TABLE` in .env file)
+   - PSBT DB Column/Field name (`DB_COLUMN` in .env file)
+
+---

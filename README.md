@@ -18,6 +18,7 @@
   - [Transaction Validation](https://github.com/fireblocks/plugin-based-callback-handler/blob/main/src/plugins/README.md#transaction-validation-plugin-txid_validationpytxidvalidation-class)
   - [Extra Signature Validation](https://github.com/fireblocks/plugin-based-callback-handler/blob/main/src/plugins/README.md#extra-signature-validation-extra_signaturepyextrasignature-class)
   - [Transaction Policy Validation](https://github.com/fireblocks/plugin-based-callback-handler/blob/main/src/plugins/README.md#transaction-policy-validation-plugin-tx_policy_validationpytxpolicyvalidation-class)
+  - [PSBT Validation](https://github.com/fireblocks/plugin-based-callback-handler/blob/main/src/plugins/README.md#psbt-validation-plugin-psbt_validationpypsbtvalidation-class)
 - [Contribution](#contribution)
   - [Adding New Plugins](#new-plugins)
   - [New DB Connections](#setting-a-new-db-connection)
