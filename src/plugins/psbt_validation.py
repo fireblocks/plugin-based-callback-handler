@@ -4,8 +4,6 @@ from typing import Dict, Any
 from src.plugins.interface import PluginInterface
 from src.databases.interface import DatabaseInterface
 from src.exceptions import PluginError, DatabaseUnsupportedError
-from embit import psbt
-from binascii import a2b_base64
 
 
 logger = logging.getLogger(__name__)
@@ -25,15 +23,15 @@ class PsbtValidation(PluginInterface):
                     "Missing extraParameters.psbt in the transaction object"
                 )
 
-            sourceType = data.get("source", {}).get("type")
-            if sourceType not in ["VAULT_ACCOUNT"]:
+            sourceType = data.get("sourceType")
+            if sourceType not in ["VAULT"]:
                 raise PluginError("Invalid source type. Must be 'VAULT_ACCOUNT'")
 
-            assetId = data.get("assetId")
+            assetId = data.get("asset")
             if assetId not in ["BTC", "BTC_TEST"]:
                 raise PluginError("Invalid assetId. Must be 'BTC' or 'BTC_TEST'")
 
-            vaultAccountId = data.get("source", {}).get("id")
+            vaultAccountId = data.get("sourceId")
             if not assetId or not vaultAccountId:
                 raise PluginError(
                     "Missing assetId or vaultAccountId in the transaction object"
@@ -42,7 +40,7 @@ class PsbtValidation(PluginInterface):
             signatureRequests = (
                 data.get("extraParameters", {})
                 .get("rawMessageData", {})
-                .get("messages", [])
+                .get("messages", False)
             )
             if not signatureRequests:
                 raise PluginError(
@@ -53,7 +51,7 @@ class PsbtValidation(PluginInterface):
             logger.info(f"Approval result from PSBT Validation Plugin is: {result}")
             return result
         except Exception as e:
-            raise PluginError(f"Unexpected error in TxID Validation plugin: {e}")
+            raise PluginError(f"Unexpected error in PSBT Validation plugin: {e}")
 
     async def _validate_psbt(
         self, psbt: str, vaultAccountId: str, signatureRequests: list[dict[str, Any]]
@@ -73,7 +71,8 @@ class PsbtValidation(PluginInterface):
             raise PluginError("PSBT does not exist in the DB")
 
         # Calculate signature hashes from PSBT
-        signature_hash_set = set(self.psbt_to_signature_hashes(psbt))
+        signature_hash_set = self.psbt_to_signature_hashes(psbt)
+        logger.info(f"Signature hash set: {signature_hash_set}")
 
         for request in signatureRequests:
             if request.get("content") not in signature_hash_set:
@@ -94,13 +93,22 @@ class PsbtValidation(PluginInterface):
         return "<PSBT Validation Plugin>"
 
     def psbt_to_signature_hashes(self, b64_psbt):
-        raw = a2b_base64(b64_psbt)
-        tx = psbt.PSBT.parse(raw)
+        from bitcointx.core.psbt import PartiallySignedTransaction # import here fixes a bug
 
-        signature_hashes = []
-        for i, inp in enumerate(tx.inputs):
-            sighash = inp.sighash_type if inp.sighash_type is not None else 0x01
-            signature_hash = tx.sighash(i, sighash=sighash).hex()
-            signature_hashes.append(signature_hash)
+        psbt = PartiallySignedTransaction.from_base64_or_binary(b64_psbt)
+        sighashes = set()
 
-        return signature_hashes
+        class SighashGatherer:
+            def get_privkey(self, x, y):
+                class FakePrivKey:
+                    pub = b"00"
+
+                    def sign(self, sighash):
+                        sighashes.add(sighash.hex())
+                        return b"00"
+
+                return FakePrivKey()
+
+        psbt.sign(SighashGatherer())
+
+        return sighashes

@@ -9,4 +9,4 @@ uvicorn>=0.27.0.post1
 aiofiles>=23.2.1
 fireblocks_sdk>=2.7.0
 pytest>=8.1.1
-embit==0.8.0
+python-bitcointx==1.1.5
