@@ -10,3 +10,4 @@ aiofiles>=23.2.1
 fireblocks_sdk>=2.7.0
 pytest>=8.1.1
 python-bitcointx==1.1.5
+requests>=2.32.4 # not directly required, pinned by Snyk to avoid a vulnerability
